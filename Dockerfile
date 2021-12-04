@@ -27,12 +27,21 @@ RUN dpkg --add-architecture i386 && \
 # Install Wine stable
 RUN apt-get install -y --install-recommends winehq-stable
 
+# Install X virtual frame buffer and winbind
+RUN apt-get install -y xvfb winbind
+
+# Cleanup
+RUN rm -rf /var/lib/apt/lists/*
+
+# Set container user for Pterodactyl
+USER container
+ENV  USER=container HOME=/home/container
+
+WORKDIR /home/container
+
 # Download winetricks from source
 RUN wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
     chmod +x ./winetricks
-
-# Install X virtual frame buffer and winbind
-RUN apt-get install -y xvfb winbind
 
 # Configure wine prefix
 # WINEDLLOVERRIDES is required so wine doesn't ask any questions during setup
@@ -42,16 +51,8 @@ RUN Xvfb :1 -screen 0 320x240x24 & \
     ./winetricks -q vcrun2012 winhttp
 
 # Cleanup
-RUN apt-get remove -y wget software-properties-common apt-transport-https cabextract && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm winetricks && \
+RUN rm winetricks && \
     rm -rf .cache/
-
-# Set container user for Pterodactyl
-USER container
-ENV  USER=container HOME=/home/container
-
-WORKDIR /home/container
 
 # Add the entrypoint script
 COPY ./entrypoint.sh /entrypoint.sh
