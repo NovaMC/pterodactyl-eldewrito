@@ -51,7 +51,7 @@ RUN apt-get remove -y wget software-properties-common apt-transport-https cabext
 
 # Set container user for Pterodactyl
 USER container
-ENV  USER=container HOME=/home/container
+ENV  USER=container HOME=/home/container WINEPREFIX=/home/container/.wine
 
 WORKDIR /home/container
 
