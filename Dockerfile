@@ -13,7 +13,10 @@ ENV CONTAINER_VERSION=0.7 \
 
 # Install temporary packages
 RUN apt-get update && \
-    apt-get install -y wget software-properties-common apt-transport-https cabextract
+    apt-get install -y wget software-properties-common apt-transport-https cabextract && \
+    adduser --disabled-password --home /home/container container
+
+
 
 # Install Wine key and repository
 RUN dpkg --add-architecture i386 && \
@@ -46,24 +49,24 @@ RUN apt-get remove -y wget software-properties-common apt-transport-https cabext
     rm winetricks && \
     rm -rf .cache/
 
+# Set container user for Pterodactyl
+USER container
+ENV  USER=container HOME=/home/container
+
+WORKDIR /home/container
+
+# Add the entrypoint script
+COPY ./entrypoint.sh /entrypoint.sh
+
 # Add the start script
-ADD start.sh .
+COPY ./start.sh /home/container/start.sh
 
 # Add the default configuration files
-ADD defaults defaults
+COPY ./defaults /home/container/defaults
 
 # Make start script executable and create necessary directories
 RUN chmod +x start.sh && \
     mkdir config logs
 
 # Set start command to execute the start script
-CMD /start.sh
-
-# Set working directory into the game directory
-WORKDIR /game
-
-# Expose necessary ports
-EXPOSE 11774/udp 11775/tcp 11776/tcp 11777/tcp
-
-# Set volumes
-VOLUME /game /config /logs
+CMD [ "/bin/bash", "/entrypoint.sh" ]
