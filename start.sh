@@ -18,8 +18,8 @@ create_default_config()
 
     echo "Copying default veto/voting json."
 
-    cp ./defaults/veto.json ./config
-    cp ./defaults/voting.json ./config
+    cp ./defaults/veto.json ./config/
+    cp ./defaults/voting.json ./config/
 }
 
 # Search for eldorado.exe in game directory
@@ -44,7 +44,7 @@ Xvfb :1 -screen 0 320x240x24 &
 echo "${GREEN}Starting dedicated server${NC}"
 
 # DLL overrides for Wine are required to prevent issues with master server announcement
-export WINEDLLOVERRIDES="winhttp,rasapi32=n"
+#export WINEDLLOVERRIDES="winhttp,rasapi32=n"
 
 if [ ! -z "${WINE_DEBUG}" ]; then
     echo "Setting wine to verbose output"
