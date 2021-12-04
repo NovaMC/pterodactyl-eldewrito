@@ -58,15 +58,5 @@ WORKDIR /home/container
 # Add the entrypoint script
 COPY ./entrypoint.sh /entrypoint.sh
 
-# Add the start script
-COPY ./start.sh /home/container/start.sh
-
-# Add the default configuration files
-COPY ./defaults /home/container/defaults
-
-# Make start script executable and create necessary directories
-RUN chmod +x start.sh && \
-    mkdir config logs
-
 # Set start command to execute the start script
 CMD [ "/bin/bash", "/entrypoint.sh" ]
