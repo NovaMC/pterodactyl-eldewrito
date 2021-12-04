@@ -6,7 +6,7 @@ ENV CONTAINER_VERSION=0.7 \
     ELDEWRITO_VERSION=0.6.1 \
     MTNDEW_CHECKSUM=496b9296239539c747347805e15d2540 \
     DISPLAY=:1 \
-    WINEPREFIX="/wine" \
+    WINEPREFIX="/home/container/.wine" \
     DEBIAN_FRONTEND=noninteractive \
     PUID=0 \
     PGID=0
@@ -15,8 +15,6 @@ ENV CONTAINER_VERSION=0.7 \
 RUN apt-get update && \
     apt-get install -y wget software-properties-common apt-transport-https cabextract && \
     adduser --disabled-password --home /home/container container
-
-
 
 # Install Wine key and repository
 RUN dpkg --add-architecture i386 && \
@@ -51,7 +49,7 @@ RUN apt-get remove -y wget software-properties-common apt-transport-https cabext
 
 # Set container user for Pterodactyl
 USER container
-ENV  USER=container HOME=/home/container WINEPREFIX=/home/container/.wine
+ENV  USER=container HOME=/home/container
 
 WORKDIR /home/container
 
