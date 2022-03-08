@@ -1,0 +1,31 @@
+{
+    "_comment": "DO NOT EDIT: FILE GENERATED AUTOMATICALLY BY PTERODACTYL PANEL - PTERODACTYL.IO",
+    "meta": {
+        "version": "PTDL_v1",
+        "update_url": null
+    },
+    "exported_at": "2022-03-07T21:53:35-06:00",
+    "name": "ElDewrito",
+    "author": "admin@novaserver.xyz",
+    "description": "Server for the modified version of Halo Online named ElDewrito.",
+    "features": null,
+    "images": [
+        "ghcr.io\/novamc\/pterodactyl-eldewrito:master"
+    ],
+    "file_denylist": [],
+    "startup": ".\/start.sh",
+    "config": {
+        "files": "{}",
+        "startup": "{\r\n    \"done\": \"Starting dedicated server\"\r\n}",
+        "logs": "{}",
+        "stop": "^C"
+    },
+    "scripts": {
+        "installation": {
+            "script": "cd \/mnt\/server\r\nmkdir config logs\r\nif [ ! -d defaults ]; then\r\nmkdir defaults\r\necho -e \"Downloading default configuration files\"\r\ncurl -o .\/defaults\/dewrito_prefs.cfg https:\/\/raw.githubusercontent.com\/NovaMC\/pterodactyl-eldewrito\/master\/defaults\/dewrito_prefs.cfg\r\ncurl -o .\/defaults\/veto.json https:\/\/raw.githubusercontent.com\/NovaMC\/pterodactyl-eldewrito\/master\/defaults\/veto.json\r\ncurl -o .\/defaults\/voting.json https:\/\/raw.githubusercontent.com\/NovaMC\/pterodactyl-eldewrito\/master\/defaults\/voting.json\r\nfi\r\nif [ ! -f start.sh ]; then\r\necho -e \"Downloading startup script\"\r\ncurl -o start.sh https:\/\/raw.githubusercontent.com\/NovaMC\/pterodactyl-eldewrito\/master\/start.sh\r\nchmod +x start.sh\r\nfi",
+            "container": "ubuntu:20.04",
+            "entrypoint": "bash"
+        }
+    },
+    "variables": []
+}
