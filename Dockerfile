@@ -25,7 +25,7 @@ RUN dpkg --add-architecture i386 && \
     apt-get update
 
 # Install Wine stable
-RUN apt-get install -y --install-recommends winehq-stable=6.0.3~focal-1
+RUN apt-get install -y --install-recommends winehq-stable=6.0.3~focal-1 -V
 
 # Install X virtual frame buffer and winbind
 RUN apt-get install -y xvfb winbind
