@@ -25,7 +25,7 @@ RUN dpkg --add-architecture i386 && \
     apt-get update
 
 # Install Wine stable
-RUN apt-get install -y --install-recommends winehq-stable
+RUN apt-get install -y --install-recommends wine-stable-i386=6.0.3~focal-1 wine-stable-amd64=6.0.3~focal-1 wine-stable=6.0.3~focal-1 winehq-stable=6.0.3~focal-1
 
 # Install X virtual frame buffer and winbind
 RUN apt-get install -y xvfb winbind
@@ -40,7 +40,7 @@ ENV  USER=container HOME=/home/container
 WORKDIR /home/container
 
 # Download winetricks from source
-RUN wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && \
+RUN wget https://raw.githubusercontent.com/Winetricks/winetricks/4340f09f0c17566205dcc74e15211ddac7780148/src/winetricks && \
     chmod +x ./winetricks
 
 # Configure wine prefix
